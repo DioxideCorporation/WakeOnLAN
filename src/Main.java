@@ -67,12 +67,14 @@ public class Main {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println("Press any key: ");
-        scan.nextLine();
     }
 
     public static void main(String args[]){
+        Scanner scan = new Scanner(System.in);
+
         new Main();
+        System.out.println("Press any key: ");
+        scan.nextLine();
     }
 
     public static int byteArrayToInt(byte[] b)
