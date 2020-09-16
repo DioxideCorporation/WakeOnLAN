@@ -5,10 +5,10 @@
 import java.util.Scanner;
 
 public class MAC {
-    private byte[] MAC_Bytes;
 
-    public byte[] mac(){
+    public static byte[] mac(){
         Scanner scan = new Scanner(System.in);
+        byte[] MAC_Bytes;
 
         System.out.print("Please enter the MAC address of your network card: ");
         byte[] MAC = getBytes(scan.next());
@@ -23,7 +23,7 @@ public class MAC {
         return MAC_Bytes;
     }
 
-    private static byte[] getBytes(String MAC) throws IllegalArgumentException {
+    public static byte[] getBytes(String MAC) throws IllegalArgumentException {
         byte[] MAC_Bytes = new byte[6];
         String[] hex = MAC.split("(\\:|\\-)");
 
@@ -38,13 +38,5 @@ public class MAC {
             throw new IllegalArgumentException("Invalid hex digit in MAC address!");
         }
         return MAC_Bytes;
-    }
-
-    public byte[] getMAC_Bytes() {
-        return MAC_Bytes;
-    }
-
-    public void setMAC_Bytes(byte[] MAC_Bytes) {
-        this.MAC_Bytes = MAC_Bytes;
     }
 }
