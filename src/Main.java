@@ -67,6 +67,8 @@ public class Main {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        System.out.println("Press any key: ");
+        scan.nextLine();
     }
 
     public static void main(String args[]){
