@@ -9,8 +9,8 @@ public class Main {
     public Main(){
         InputStream inFile = null;
         OutputStream outFile = null;
-        Scanner scan = new Scanner(System.in);
-        WOL wol = new WOL();
+        final Scanner scan = new Scanner(System.in);
+        final WOL wol = new WOL();
         int value;
 
         System.out.println("Welcome to the WakeOnLAN app, created by Adrian Herrmann");
@@ -18,10 +18,10 @@ public class Main {
         try {
             inFile = new FileInputStream("MAC_AddressList.mac");
             System.out.println("The MAC_AddressList.mac file was found!");
-        } catch (FileNotFoundException e) {
+        } catch (final FileNotFoundException e) {
             try {
                 outFile = new FileOutputStream("MAC_AddressList.mac");
-            } catch (FileNotFoundException fileNotFoundException) {
+            } catch (final FileNotFoundException fileNotFoundException) {
                 fileNotFoundException.printStackTrace();
             }
             System.out.println("The MAC_AddressList.mac file could not be found!");
@@ -29,62 +29,63 @@ public class Main {
             value = scan.nextInt();
             try {
                 outFile.write(intToByteArray(value));
-            } catch (IOException ioException) {
+            } catch (final IOException ioException) {
                 ioException.printStackTrace();
             }
-            for (int i = 0; i < value; i++){
+            for (int i = 0; i < value; i++) {
                 System.out.print(i + 1 + "# ");
                 try {
                     outFile.write(MAC.mac());
-                } catch (IOException ioException) {
+                } catch (final IOException ioException) {
                     ioException.printStackTrace();
                 }
             }
             try {
                 outFile.close();
-            } catch (IOException ioException) {
+            } catch (final IOException ioException) {
                 ioException.printStackTrace();
             }
 
             try {
                 inFile = new FileInputStream("MAC_AddressList.mac");
-            } catch (FileNotFoundException fileNotFoundException) {
+            } catch (final FileNotFoundException fileNotFoundException) {
                 System.err.println("The MAC_AddressList.mac file could not be found!");
                 fileNotFoundException.printStackTrace();
                 System.exit(-1);
             }
         }
         try {
-            int a = byteArrayToInt(reverse(inFile.readNBytes(4))), offset = 4;
-            byte[] b = new byte[8192];
+            final int a = byteArrayToInt(reverse(inFile.readNBytes(4)));
+            int offset = 4;
+            final byte[] b = new byte[8192];
 
-            for (int i = 0; i < a; i++){
+            for (int i = 0; i < a; i++) {
                 inFile.readNBytes(b, offset, 102);
                 System.out.print(i + 1 + "# ");
                 wol.wake(b);
                 offset += 102;
             }
-        } catch (IOException e) {
+        } catch (final IOException e) {
             e.printStackTrace();
         }
+        scan.close();
     }
 
-    public static void main(String args[]){
-        Scanner scan = new Scanner(System.in);
+    public static void main(final String args[]) {
+        final Scanner scan = new Scanner(System.in);
 
         new Main();
         System.out.println("Press any key: ");
         scan.nextLine();
+        scan.close();
     }
 
-    public static int byteArrayToInt(byte[] b)
-    {
+    public static int byteArrayToInt(final byte[] b) {
         return b[3] & 0xFF | (b[2] & 0xFF) << 8 | (b[1] & 0xFF) << 16 | (b[0] & 0xFF) << 24;
     }
 
-    public static byte[] intToByteArray(int a)
-    {
-        byte[] ret = new byte[4];
+    public static byte[] intToByteArray(final int a) {
+        final byte[] ret = new byte[4];
         ret[0] = (byte) (a & 0xFF);
         ret[1] = (byte) ((a >> 8) & 0xFF);
         ret[2] = (byte) ((a >> 16) & 0xFF);
@@ -92,7 +93,7 @@ public class Main {
         return ret;
     }
 
-    public static byte[] reverse(byte[] array) {
+    public static byte[] reverse(final byte[] array) {
         if (array == null) {
             return null;
         }
